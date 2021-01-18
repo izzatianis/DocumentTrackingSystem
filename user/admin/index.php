@@ -1,0 +1,685 @@
+<?php 
+    include 'settings.php'; //include settings
+
+    $query = "SELECT * FROM users WHERE role_name IS NULL or role_name = ''"; 
+    $result = mysqli_query($conn, $query); 
+
+    $query2 = "SELECT * FROM users WHERE role_name ='assistant'"; 
+    $result2 = mysqli_query($conn, $query2); 
+
+    $query3 = "SELECT * FROM users WHERE role_name ='officer'"; 
+    $result3 = mysqli_query($conn, $query3);
+
+    $query4 = "SELECT * FROM users WHERE role_name ='director'"; 
+    $result4 = mysqli_query($conn, $query4);
+
+    $query5 = "SELECT * FROM users WHERE role_name ='owner'"; 
+    $result5 = mysqli_query($conn, $query5);
+
+    $query6 = "SELECT * FROM users WHERE role_name ='admin'"; 
+    $result6 = mysqli_query($conn, $query6);
+
+    $query7 = "SELECT * FROM users"; 
+    $result7 = mysqli_query($conn, $query7);
+
+    $query8 = "SELECT * FROM announcement"; 
+    $result8 = mysqli_query($conn, $query8);
+
+    if ($result) 
+    { 
+         // it return number of rows in the table. 
+        $row = mysqli_num_rows($result); 
+            
+        if ($row) 
+        { 
+            $_SESSION['current_count'] = $row;
+        } 
+        else
+        {
+            $_SESSION['current_count'] = 0;
+        }
+        // close the result. 
+        mysqli_free_result($result); 
+    }
+
+    if ($result2) 
+    { 
+         // it return number of rows in the table. 
+        $row2 = mysqli_num_rows($result2); 
+            
+        if ($row2) 
+        { 
+            $_SESSION['assistant_count'] = $row2;
+        } 
+        else
+        {
+            $_SESSION['assistant_count'] = 0;
+        }
+        // close the result. 
+        mysqli_free_result($result2); 
+    }
+
+    if ($result3) 
+    { 
+         // it return number of rows in the table. 
+        $row3 = mysqli_num_rows($result3); 
+            
+        if ($row3) 
+        { 
+            $_SESSION['officer_count'] = $row3;
+        } 
+        else
+        {
+            $_SESSION['officer_count'] = 0;
+        }
+        // close the result. 
+        mysqli_free_result($result3); 
+    }
+
+    if ($result4) 
+    { 
+         // it return number of rows in the table. 
+        $row4 = mysqli_num_rows($result4); 
+            
+        if ($row4) 
+        { 
+            $_SESSION['director_count'] = $row4;
+        } 
+        else
+        {
+            $_SESSION['director_count'] = 0;
+        }
+        // close the result. 
+        mysqli_free_result($result4); 
+    }
+
+    if ($result5) 
+    { 
+         // it return number of rows in the table. 
+        $row5 = mysqli_num_rows($result5); 
+            
+        if ($row5) 
+        { 
+            $_SESSION['owner_count'] = $row5;
+        } 
+        else
+        {
+            $_SESSION['owner_count'] = 0;
+        }
+        // close the result. 
+        mysqli_free_result($result5); 
+    }
+
+    if ($result6) 
+    { 
+         // it return number of rows in the table. 
+        $row6 = mysqli_num_rows($result6); 
+            
+        if ($row6) 
+        { 
+            $_SESSION['admin_count'] = $row6;
+        } 
+        else
+        {
+            $_SESSION['admin_count'] = 0;
+        }
+        // close the result. 
+        mysqli_free_result($result6); 
+    }
+    if ($result7) 
+    { 
+        // it return number of rows in the table. 
+        $row7 = mysqli_num_rows($result7); 
+            
+        if ($row7) 
+        { 
+             $_SESSION['total_count'] = $row7;
+        } 
+        else
+        {
+            $_SESSION['total_count'] = 0;
+        }
+        // close the result. 
+        mysqli_free_result($result7);
+    }
+    if ($result8) 
+    { 
+        // it return number of rows in the table. 
+        $row8 = mysqli_num_rows($result8); 
+            
+        if ($row8) 
+        { 
+             $_SESSION['announcement_count'] = $row8;
+        } 
+        else
+        {
+            $_SESSION['announcement_count'] = 0;
+        }
+        // close the result. 
+        mysqli_free_result($result8);
+    }
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Document Tracking System</title>
+    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/International_Islamic_University_Malaysia_logo.svg/1200px-International_Islamic_University_Malaysia_logo.svg.png" type="image/icon type">
+
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<style type="text/css">
+
+  .all{
+    font-family: "Nunito", sans-serif;
+  }
+
+  .uia{
+    background: #50C8B5;
+    color: black;
+  }
+
+  .black{
+      background: #6C6C6C;
+      color: white;
+  }
+
+</style>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion uia" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
+                <div class="sidebar-brand-text mx-3 uia">Role : <?php $ufunc->UserRole();?></div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item uia">
+                <a class="nav-link" href="index.php">
+                    <i class="fas fa-fw fa-tachometer-alt" style="color:black"></i>
+                    <span style="color:black" >Dashboard</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading" style="color:black">
+                Menu
+            </div>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="announcement.php">
+                    <i class="fas fa-fw fa-chart-area" style="color:black"></i>
+                    <span style="color:black">Update Announcement</span></a>
+            </li>
+
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="update_user_form.php">
+                    <i class="fas fa-fw fa-table" style="color:black"></i>
+                    <span style="color:black">Update User Role</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="../../includes/logout.php">
+                    <i class="fas fa-fw fa-table" style="color:black"></i>
+                    <span style="color:black">Logout</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column ">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light black topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Search -->
+                    <div>
+                      Document Tracking System
+                    </div>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto black">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <!-- Nav Item - Alerts -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <!-- Counter - Alerts -->
+                                <span class="badge badge-danger badge-counter"><?php echo $_SESSION['current_count']?></span>
+                            </a>
+                            <!-- Dropdown - Alerts -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    Alerts Center
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="update_user_form.php">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-primary">
+                                            <i class="fas fa-file-alt text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">
+                                            <?php echo date("d-m-Y"); ?>
+                                        </div>
+                                        <span class="font-weight-bold">
+                                            You have <?php echo $_SESSION['current_count']?> user(s) with no role
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                        </li>
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-white-600 small"><?php echo $_SESSION['name']?></span>
+                                <img class="img-profile rounded-circle"
+                                    src="img/undraw_profile.svg">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800"> Admin Dashboard</h1>
+                    </div>
+
+                    <!-- Content Row -->
+                    <div class="row">
+
+                    <!-- Admin -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-l font-weight-bold text-warning text-uppercase mb-1">
+                                                Number of Admin</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $_SESSION['admin_count']?></div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-user fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Director -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-danger shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-l font-weight-bold text-danger text-uppercase mb-1">
+                                                Number of Director(s)</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $_SESSION['director_count']?></div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-user fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-l font-weight-bold text-success text-uppercase mb-1">
+                                                Number of Assistant(s)</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $_SESSION['assistant_count']?></div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-l font-weight-bold text-info text-uppercase mb-1">
+                                            Number of officer(s)
+                                            </div>
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php echo $_SESSION['officer_count']?></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-l font-weight-bold text-info text-uppercase mb-1">
+                                                Number of Document Owner(s)</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $_SESSION['owner_count']?></div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>
+
+                        <!-- Users with no roles -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2" >
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <a href="update_user_form.php">
+                                                <div class="text-l font-weight-bold text-success text-uppercase mb-1" >
+                                                    Users with no role(s)
+                                                </div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                    <?php echo $_SESSION['current_count']?>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-exclamation fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pending Requests Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-danger shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-l font-weight-bold text-danger text-uppercase mb-1">
+                                                Total Users</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $_SESSION['total_count']?></div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-l font-weight-bold text-warning text-uppercase mb-1">
+                                                Announcement by Admin(s)</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $_SESSION['announcement_count']?></div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-bullhorn fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+
+
+
+                        <div class="col-lg-12">
+                            <!-- Collapsable Card Example -->
+                            <div class="card shadow mb-4 ">
+                                <!-- Card Header - Accordion -->
+                                <a href="#collapseCardExample2" class="d-block card-header py-3 black" data-toggle="collapse"
+                                    role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                                    <h6 class="m-0 font-weight-bold text-white">Write your announcement:</h6>
+                                </a>
+                                <!-- Card Content - Collapse -->
+
+                                <form action='' method="post">
+                                    <div class="collapse show" id="collapseCardExample2">
+                                        <textarea class="card-body form-control" contenteditable="true" name="message" autocomplete="off"></textarea>
+                                        <button name="announceBtn" type="submit" class="form-control btn-primary uia">Announce</button>
+                                    </div>
+                                </form>
+
+                                <?php
+
+                                    if(isset($_POST['announceBtn'])){
+                                        
+                                        $message = isset($_POST['message']) ? $_POST['message'] : 'Not set';
+                                        
+                                        $query = "INSERT INTO announcement (message) VALUES ('$message')"; 
+
+                                        if ($conn->query($query) === FALSE) 
+                                        {
+                                          echo "Error updating record: " . $conn->error;
+                                        }
+
+                                        $conn->close();
+                                    } 
+                                ?>
+                            </div>
+                        </div>
+                        
+
+                    
+                    <!-- Content Row -->
+
+                    
+                        <!-- Area Chart -->
+                        <div class="col-lg-12">
+                        <!-- Collapsable Card Example -->
+                        <div class="card shadow mb-4">
+                            <!-- Card Header - Accordion -->
+                            <a href="#collapseCardExample" class="d-block card-header py-3 black" data-toggle="collapse"
+                                role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                                <h6 class="m-0 font-weight-bold text-white">Announcement History:</h6>
+                            </a>
+                            <!-- Card Content - Collapse -->
+                            <form action='add_announcement.php' method="post">
+                                <div class="collapse show" id="collapseCardExample">
+                                     <?php 
+                                        include "C:\\xampp\htdocs\DTS2\includes\connect.php";
+                                        date_default_timezone_set('Asia/Kuala_Lumpur');
+                                        // SQL query to fetch information of registerd users and finds user match.
+                                        $query = "SELECT * FROM announcement ORDER BY `date` DESC LIMIT 5";
+                                        $result = mysqli_query($conn,$query); 
+                                        
+                                        while ($row = mysqli_fetch_array($result)) {
+                                          $date = $row['date'];
+                                          $formatted_date = strtotime($date);
+
+                                          //echo "<td id='".$row['login']."'>". $row['login'] ."</td>";
+                                          echo "<div class='card-body'>" ."Date: ".date("d-m-Y H:i:s", $formatted_date)."<br>".$row['message']. "</div>";
+                                          echo "<br>";
+                                        }
+                                        
+                                        mysqli_close($conn); // Closing Connection
+                                    ?>
+                                </div>
+                            </form>
+                        </div>
+                        </div>
+
+                        <!-- Google Calendar -->
+   
+                    
+                </div>
+                <!-- /.container-fluid -->
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Document Tracking System 2021</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="../../includes/logout.php">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+
+</body>
+
+</html>
