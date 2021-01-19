@@ -1,5 +1,5 @@
 <?php
-	$dbhost = "localhost"; //Host
+	$dbhost = "127.0.0.1"; //Host
 	$dbuser = "root"; //Database user
 	$dbpass = ""; //Database password
 	$dbname = "phpmultiuserlogin"; //Database name
